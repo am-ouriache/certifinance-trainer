@@ -15,6 +15,7 @@ import QuizEngine from './components/QuizEngine';
 import MockExam from './components/MockExam';
 import ErrorReview from './components/ErrorReview';
 import ManualAddContent from './components/ManualAddContent';
+import GlobalSearch from './components/GlobalSearch';
 
 // ─── Nav state ───────────────────────────────────────────────────────────────
 
@@ -36,23 +37,32 @@ const initialState: AppState = {
 
 export default function App() {
   const [state, setState] = useState<AppState>(initialState);
+  const [searchQuery, setSearchQuery] = useState('');
   const progressHook = useProgress();
 
-  const { progress, recordAnswer, recordMockExam, markErrorReviewed, unmarkErrorReviewed,
-    addCustomQuestion, addCustomFlashcard, addCustomCourse } = progressHook;
+  const {
+    progress,
+    recordAnswer,
+    recordMockExam,
+    markErrorReviewed,
+    unmarkErrorReviewed,
+    addCustomQuestion,
+    addCustomFlashcard,
+    addCustomCourse,
+  } = progressHook;
 
   // Merge built-in + custom content
   const allQuestions = useMemo(
     () => [...builtInQuestions, ...progress.customQuestions],
-    [progress.customQuestions]
+    [progress.customQuestions],
   );
   const allCourses = useMemo(
     () => [...builtInCourses, ...progress.customCourses],
-    [progress.customCourses]
+    [progress.customCourses],
   );
   const allFlashcards = useMemo(
     () => [...builtInFlashcards, ...progress.customFlashcards],
-    [progress.customFlashcards]
+    [progress.customFlashcards],
   );
 
   const totalQuestions = allQuestions.length;
@@ -60,6 +70,7 @@ export default function App() {
   // ─── Navigation helpers ──────────────────────────────────────────────────
 
   const navigate = (tab: NavTab, examId?: ExamId) => {
+    setSearchQuery('');
     if (tab === 'amf') {
       setState((prev) => ({
         ...prev,
@@ -70,7 +81,6 @@ export default function App() {
     } else if (tab === 'dashboard' || tab === 'add-content') {
       setState({ tab, examId: null, section: null, amfSubTab: state.amfSubTab });
     } else {
-      // Single-exam tabs: cif-cgp, iobsp-niveau-1, ias-niveau-1
       const tabExams = getExamsByNav(tab);
       setState((prev) => ({
         ...prev,
@@ -87,6 +97,16 @@ export default function App() {
 
   const goBack = () => {
     setState((prev) => ({ ...prev, section: null }));
+  };
+
+  // Navigate directly to an exam section (used by GlobalSearch)
+  const navigateToSection = (tab: NavTab, examId: ExamId, section: ExamSection) => {
+    const newAmfSubTab: 'amf-generaliste' | 'amf-finance-durable' =
+      examId === 'amf-generaliste' || examId === 'amf-finance-durable'
+        ? examId
+        : state.amfSubTab;
+    setSearchQuery('');
+    setState({ tab, examId, section, amfSubTab: newAmfSubTab });
   };
 
   // ─── Resolve current exam ────────────────────────────────────────────────
@@ -108,7 +128,6 @@ export default function App() {
   const renderContent = () => {
     const { tab, section } = state;
 
-    // Dashboard
     if (tab === 'dashboard') {
       return (
         <Dashboard
@@ -119,7 +138,6 @@ export default function App() {
       );
     }
 
-    // Add content
     if (tab === 'add-content') {
       return (
         <ManualAddContent
@@ -130,7 +148,6 @@ export default function App() {
       );
     }
 
-    // AMF tab with sub-exams
     if (tab === 'amf') {
       const amfExamId = state.examId as 'amf-generaliste' | 'amf-finance-durable';
       const amfExam = getExamById(amfExamId);
@@ -138,9 +155,8 @@ export default function App() {
 
       return (
         <div className="space-y-4">
-          {/* AMF sub-tabs */}
           {!section && (
-            <div className="flex gap-2 border-b border-slate-200 pb-0">
+            <div className="flex gap-1 border-b border-slate-200 dark:border-[#22223a] pb-0">
               {(['amf-generaliste', 'amf-finance-durable'] as const).map((subId) => {
                 const subExam = getExamById(subId)!;
                 return (
@@ -157,7 +173,7 @@ export default function App() {
                     className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px ${
                       amfExamId === subId
                         ? `${subExam.textColorClass} border-current`
-                        : 'text-slate-500 border-transparent hover:text-slate-700'
+                        : 'text-slate-500 dark:text-slate-400 border-transparent hover:text-slate-700 dark:hover:text-slate-200'
                     }`}
                   >
                     {subExam.label}
@@ -171,7 +187,6 @@ export default function App() {
       );
     }
 
-    // Single-exam tabs
     if (currentExam) {
       return renderExamContent(currentExam, section);
     }
@@ -248,8 +263,23 @@ export default function App() {
   };
 
   return (
-    <Layout activeTab={state.tab} onTabChange={navigate}>
-      {renderContent()}
+    <Layout
+      activeTab={state.tab}
+      onTabChange={navigate}
+      searchQuery={searchQuery}
+      onSearch={setSearchQuery}
+    >
+      {searchQuery.trim().length >= 1 ? (
+        <GlobalSearch
+          query={searchQuery}
+          allCourses={allCourses}
+          allFlashcards={allFlashcards}
+          allQuestions={allQuestions}
+          onNavigateToSection={navigateToSection}
+        />
+      ) : (
+        renderContent()
+      )}
     </Layout>
   );
 }

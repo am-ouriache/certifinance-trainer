@@ -64,7 +64,7 @@ export default function ErrorReview({
             <span className="badge bg-slate-100 text-slate-600">{retryQuestion.theme}</span>
             <span className="badge bg-red-100 text-red-700">Réessayer</span>
           </div>
-          <p className="text-base font-medium text-slate-800 leading-relaxed">{retryQuestion.question}</p>
+          <p className="text-base font-medium text-slate-800 dark:text-slate-100 leading-relaxed">{retryQuestion.question}</p>
           <div className="mt-6 space-y-3">
             {retryQuestion.choices.map((choice, idx) => {
               const isSelected = retryAnswer === idx;
@@ -114,7 +114,7 @@ export default function ErrorReview({
       <div className="flex items-center gap-3">
         <button onClick={onBack} className="btn-ghost">← Retour</button>
         <span className={`badge ${exam.badgeClass}`}>{exam.shortLabel}</span>
-        <h1 className="text-lg font-semibold">Mes erreurs</h1>
+        <h1 className="text-lg font-semibold text-slate-800 dark:text-slate-100">Mes erreurs</h1>
       </div>
 
       {/* Stats */}
@@ -175,21 +175,21 @@ export default function ErrorReview({
               }`}>{question.difficulty}</span>
             </div>
 
-            <p className="text-sm font-medium text-slate-800 mb-4">{question.question}</p>
+            <p className="text-sm font-medium text-slate-800 dark:text-slate-100 mb-4">{question.question}</p>
 
             <div className="grid sm:grid-cols-2 gap-3 text-sm mb-4">
-              <div className="bg-red-50 rounded-lg p-3">
+              <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-3">
                 <p className="text-xs text-red-500 font-medium mb-1">❌ Votre réponse</p>
-                <p className="text-slate-700">{question.choices[answer.selectedIndex]}</p>
+                <p className="text-slate-700 dark:text-slate-300">{question.choices[answer.selectedIndex]}</p>
               </div>
-              <div className="bg-emerald-50 rounded-lg p-3">
-                <p className="text-xs text-emerald-600 font-medium mb-1">✅ Bonne réponse</p>
-                <p className="text-slate-700">{question.choices[question.correctAnswerIndex]}</p>
+              <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-3">
+                <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium mb-1">✅ Bonne réponse</p>
+                <p className="text-slate-700 dark:text-slate-300">{question.choices[question.correctAnswerIndex]}</p>
               </div>
             </div>
 
-            <div className="bg-slate-50 rounded-lg p-3 text-sm text-slate-600 mb-4">
-              <p className="font-medium text-slate-700 mb-1">Explication :</p>
+            <div className="bg-slate-50 dark:bg-[#1c1c28] rounded-xl p-3 text-sm text-slate-600 dark:text-slate-300 mb-4">
+              <p className="font-medium text-slate-700 dark:text-slate-200 mb-1">Explication :</p>
               {question.explanation}
             </div>
 

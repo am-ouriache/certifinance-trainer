@@ -1,6 +1,8 @@
 import type { Flashcard } from '../types';
+import { cifCgpFlashcardsBlockA } from './cifCgpFlashcardsBlockA';
 
 export const builtInFlashcards: Flashcard[] = [
+  ...cifCgpFlashcardsBlockA,
   // ─── CIF / CGP ──────────────────────────────────────────────────────────────
   {
     id: 'fc-cif-001',

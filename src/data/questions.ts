@@ -1,5 +1,5 @@
 import type { Question } from '../types';
-
+import { cifCgpQuestionsBlockA } from './cifCgpQuestionsBlockA';
 // ─────────────────────────────────────────────────────────────────────────────
 // CIF / CGP — 5 questions d'exemple
 // ─────────────────────────────────────────────────────────────────────────────
@@ -600,6 +600,7 @@ export const builtInQuestions: Question[] = [
   ...amfFinanceDurableQuestions,
   ...iobspQuestions,
   ...iasQuestions,
+  ...cifCgpQuestionsBlockA,
 ];
 
 export const getQuestionsByExam = (examId: string, questions: Question[]): Question[] =>

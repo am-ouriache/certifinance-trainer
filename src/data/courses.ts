@@ -1,6 +1,7 @@
 import type { Course } from '../types';
-
+import { cifCgpCoursesBlockA } from './cifCgpCoursesBlockA';
 export const builtInCourses: Course[] = [
+  ...cifCgpCoursesBlockA,
   // ─── CIF / CGP ─────────────────────────────────────────────────────────────
   {
     id: 'course-cif-001',

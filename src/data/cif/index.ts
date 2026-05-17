@@ -4,13 +4,18 @@ import { cifLcbftQuestions } from './lcbft.questions';
 import { cifProductsQuestions } from './products.questions';
 import { cifFiscalityQuestions } from './fiscality.questions';
 
+import { cifAssuranceVieQuestions } from './assurance_vie.questions';
+import { cifEnveloppesQuestions } from './enveloppes.questions';
+import { cifImmobilierScpiQuestions } from './immobilier_scpi.questions';
+import { cifTransmissionQuestions } from './transmission.questions';
+import { cifAllocationFiscalityQuestions } from './allocation_fiscality.questions';
+
 import { cifRegulationCourses } from './regulation.courses';
 import { cifMif2Courses } from './mif2.courses';
 import { cifLcbftCourses } from './lcbft.courses';
+import { cifPatrimoineCourses } from './patrimoine.courses';
 
-import { cifRegulationFlashcards } from './regulation.flashcards';
-import { cifMif2Flashcards } from './mif2.flashcards';
-import { cifLcbftFlashcards } from './lcbft.flashcards';
+import { cifFlashcardsV2Global } from './flashcards.v2';
 
 export const cifQuestions = [
   ...cifRegulationQuestions,
@@ -18,16 +23,20 @@ export const cifQuestions = [
   ...cifLcbftQuestions,
   ...cifProductsQuestions,
   ...cifFiscalityQuestions,
+  ...cifAssuranceVieQuestions,
+  ...cifEnveloppesQuestions,
+  ...cifImmobilierScpiQuestions,
+  ...cifTransmissionQuestions,
+  ...cifAllocationFiscalityQuestions,
 ];
 
 export const cifCourses = [
   ...cifRegulationCourses,
   ...cifMif2Courses,
   ...cifLcbftCourses,
+  ...cifPatrimoineCourses,
 ];
 
 export const cifFlashcards = [
-  ...cifRegulationFlashcards,
-  ...cifMif2Flashcards,
-  ...cifLcbftFlashcards,
+  ...cifFlashcardsV2Global,
 ];

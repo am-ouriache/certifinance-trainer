@@ -1,5 +1,11 @@
 import type { Question } from '../types';
+
+// ─── CIF/CGP — Blocs pédagogiques ────────────────────────────────────────────
+// Bloc A : base initiale (statut, conditions, ORIAS, AMF, RCP…)
 import { cifCgpQuestionsBlockA } from './cifCgpQuestionsBlockA';
+// Bloc B : à créer lors de l'intégration du Pack CIF/CGP v2
+// import { cifCgpQuestionsBlockB } from './cifCgpQuestionsBlockB';
+// ─────────────────────────────────────────────────────────────────────────────
 // ─────────────────────────────────────────────────────────────────────────────
 // CIF / CGP — 5 questions d'exemple
 // ─────────────────────────────────────────────────────────────────────────────
@@ -595,12 +601,15 @@ const iasQuestions: Question[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const builtInQuestions: Question[] = [
-  ...cifCgpQuestions,
+  // ── CIF / CGP ──────────────────────────────────────────────────────────────
+  ...cifCgpQuestions,        // questions inline d'origine
+  ...cifCgpQuestionsBlockA,  // Bloc A
+  // ...cifCgpQuestionsBlockB, // ← décommenter lors de l'intégration du Pack v2
+  // ── Autres examens ─────────────────────────────────────────────────────────
   ...amfGeneralisteQuestions,
   ...amfFinanceDurableQuestions,
   ...iobspQuestions,
   ...iasQuestions,
-  ...cifCgpQuestionsBlockA,
 ];
 
 export const getQuestionsByExam = (examId: string, questions: Question[]): Question[] =>

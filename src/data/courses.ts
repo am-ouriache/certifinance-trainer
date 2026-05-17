@@ -1,17 +1,13 @@
 import type { Course } from '../types';
 
-// ─── CIF/CGP — Blocs pédagogiques ────────────────────────────────────────────
-// Bloc A : base initiale (statut, réglementation, MIF 2…)
-import { cifCgpCoursesBlockA } from './cifCgpCoursesBlockA';
-// Bloc B : à créer lors de l'intégration du Pack CIF/CGP v2
-// import { cifCgpCoursesBlockB } from './cifCgpCoursesBlockB';
+// ─── CIF/CGP — via module src/data/cif/ ──────────────────────────────────────
+import { cifCourses } from './cif';
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const builtInCourses: Course[] = [
   // ── CIF / CGP ──────────────────────────────────────────────────────────────
-  ...cifCgpCoursesBlockA,  // Bloc A
-  // ...cifCgpCoursesBlockB, // ← décommenter lors de l'intégration du Pack v2
-  // ─── CIF / CGP ─────────────────────────────────────────────────────────────
+  ...cifCourses,     // modules thématiques → src/data/cif/
+  // ─── CIF / CGP — cours inline d'exemple ────────────────────────────────────
   {
     id: 'course-cif-001',
     examId: 'cif-cgp',

@@ -1,17 +1,13 @@
 import type { Flashcard } from '../types';
 
-// ─── CIF/CGP — Blocs pédagogiques ────────────────────────────────────────────
-// Bloc A : base initiale (statut, conditions, ORIAS, AMF, RCP…)
-import { cifCgpFlashcardsBlockA } from './cifCgpFlashcardsBlockA';
-// Bloc B : à créer lors de l'intégration du Pack CIF/CGP v2
-// import { cifCgpFlashcardsBlockB } from './cifCgpFlashcardsBlockB';
+// ─── CIF/CGP — via module src/data/cif/ ──────────────────────────────────────
+import { cifFlashcards } from './cif';
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const builtInFlashcards: Flashcard[] = [
   // ── CIF / CGP ──────────────────────────────────────────────────────────────
-  ...cifCgpFlashcardsBlockA,  // Bloc A
-  // ...cifCgpFlashcardsBlockB, // ← décommenter lors de l'intégration du Pack v2
-  // ─── CIF / CGP ──────────────────────────────────────────────────────────────
+  ...cifFlashcards,     // modules thématiques → src/data/cif/
+  // ─── CIF / CGP — flashcards inline d'exemple ────────────────────────────────
   {
     id: 'fc-cif-001',
     examId: 'cif-cgp',
